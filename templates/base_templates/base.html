@@ -1,0 +1,323 @@
+<!--END-->
+<!--END-->
+<!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<!--[if IE 10]>
+<html class="ie10" lang="ru">
+<![endif]-->
+<!--[if IE 11]>
+<html class="ie11" lang="ru">
+<![endif]-->
+<!--[if gt IE 11]><!-->
+<html lang="ru"> <!--<![endif]-->
+
+<head>
+    {% load static %}
+    <title>Megano</title>
+    <meta name="description" content="Описание страницы">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Italic.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Bold.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Bold_Italic.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Light.woff' %}" as="font">
+    <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Light_Italic.woff' %}" as="font">
+
+    <link rel="stylesheet" href="{% static 'assets/css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/basic.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/extra.css' %}">
+
+    <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script><!--[if lt IE 9]>
+  <script src="{% static 'http://html5shiv.googlecode.com/svn/trunk/html5.js' %}"></script><![endif]-->
+    <script>
+        function showValues() {
+            var str = $("form").serialize();
+            $("#results").text(str);
+        }
+        $("input[type='checkbox'], input[type='radio']").on("click", showValues);
+        $("select").on("change", showValues);
+        showValues();
+    </script>
+</head>
+
+<body class="Site">
+    <!--if lt IE 8
+  p.error-browser
+      | Ваш браузер&nbsp;
+      em устарел!&nbsp;
+      a(href="http://browsehappy.com/") Выберите новую версию
+          +s
+          | браузера здесь&nbsp;
+      | для правильного отображения сайта.
+  -->
+    <header class="Header">
+        <div class="ControlPanel">
+            <div class="wrap">
+                <div class="row ControlPanel-row">
+                    <div class="row-block">
+                        <div class="row ControlPanel-rowSplit">
+                            <div class="row-block"><a class="ControlPanel-title" href="#">Бесплатная доставка</a>
+                            </div>
+                            <div class="row-block hide_700"><span class="ControlPanel-title">подписывайтесь на
+                                    нас</span>
+                                <ul class="menu menu_img menu_smallImg ControlPanel-menu">
+                                    <li class="menu-item"><a class="menu-link" href="#"><img
+                                                src="{% static 'assets/img/icons/socialHeader/fb.svg' %}"
+                                                alt="fb.svg" /></a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link" href="#"><img
+                                                src="{% static 'assets/img/icons/socialHeader/tw.svg' %}"
+                                                alt="tw.svg" /></a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link" href="#"><img
+                                                src="{% static 'assets/img/icons/socialHeader/in.svg' %}"
+                                                alt="in.svg" /></a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link" href="#"><img
+                                                src="{% static 'assets/img/icons/socialHeader/pt.svg' %}"
+                                                alt="pt.svg" /></a>
+                                    </li>
+                                    <li class="menu-item"><a class="menu-link" href="#"><img
+                                                src="{% static 'assets/img/icons/socialHeader/mail.svg' %}"
+                                                alt="mail.svg" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <nav class="row-block">
+                        <div class="row ControlPanel-rowSplit">
+                            {% if request.user.is_authenticated %}
+                            <div class="row-block"><a class="ControlPanel-title"
+                                    href="{% url 'account:profile' request.user.id %}">Личный кабинет</a></div>
+                            <div class="row-block"><a class="ControlPanel-title"
+                                    href="{% url 'account:logout' %}">Выйти</a></div>
+                            {% else %}
+                            <div class="row-block"><a class="ControlPanel-title"
+                                    href="{% url 'account:sign_up' %}?next={{ request.path }}">Войти / Регистрация</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!--+div.menuModal#navigate
+      //    +menu([
+      //        ['Главная','index.html'],
+      //        ['Портфолио','index.html'],
+      //        ['Мои проекты','index.html'],
+      //        ['Контакты','index.html']
+      //    ], page === 'article'? 'Портфолио': 'Главная')._main
+
+      block
+      -->
+        </div>
+        <div class="wrap">
+            <div class="row Header-rowMain">
+                <div class="row-block Header-logo"><a class="logo" href="/"><img class="logo-image"
+                            src="{% static 'assets/img/logo.png' %}" alt="logo.png" /></a>
+                </div>
+                <nav class="row-block row-block_right Header-menu">
+                    <div class="menuModal" id="navigate">
+                        <ul class="menu menu_main">
+                            <li class="menu-item"><a class="menu-link" href="/">Главная</a>
+                            </li>
+
+                            <li class="menu-item"><span class="menu-label menu-label_success">Hot</span><a
+                                    class="menu-link" href="{% url 'catalog:goods' hot_item.slug %}">Предложения</a>
+                            </li>
+
+                            <li class="menu-item"><a class="menu-link"
+                                    href="{% url 'catalog:product_list' %}">Каталог</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="row-block">
+                    <div class="CartBlock"><a class="CartBlock-block" href="{% url 'cart:cart_detail' %}"><img
+                                class="CartBlock-img" src="{% static 'assets/img/icons/cart.svg' %}"
+                                alt="cart.svg" /><span class="CartBlock-amount">{{ cart.get_total_quantity }}</span></a>
+                        <div class="CartBlock-block"><span class="CartBlock-price">{{ cart.get_total_price }}&#8381;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-block Header-trigger"><a class="menuTrigger" href="#navigate">
+                        <div class="menuTrigger-content">Показать навигацию
+                        </div><span></span><span></span><span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="Header-searchWrap">
+            <div class="wrap">
+                <div class="Header-categories">
+                    <div class="CategoriesButton">
+                        <div class="CategoriesButton-title">
+                            <div class="CategoriesButton-icon"><img src="{% static 'assets/img/icons/allDep.svg' %}"
+                                    alt="allDep.svg" />
+                            </div><span class="CategoriesButton-text">Все разделы</span>
+                            <div class="CategoriesButton-arrow">
+                            </div>
+                        </div>
+                        <div class="CategoriesButton-content">
+                            <div class="CategoriesButton-link"><a href="{% url 'catalog:product_list' %}">
+                                    <div class="CategoriesButton-icon"></div><span class="CategoriesButton-text">Все
+                                        категории</span>
+                                </a>
+                            </div>
+                            {% for category in categories %}
+                            <div class="CategoriesButton-link"><a href="{{category.get_absolute_url}}">
+                                    <div class="CategoriesButton-icon"><img width="23" src={{ category.category_icon.url }} alt="иконка" />
+                                    </div><span class="CategoriesButton-text">{{ category.name }}</span>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="Header-searchLink"><img src="{% static 'assets/img/icons/search.svg' %}" alt="search.svg" />
+                </div>
+                <div class="Header-search">
+                    <div class="search">
+                        <form class="form form_search" action="{% url 'catalog:product_list' %}" method="get">
+                            {% csrf_token %}
+                            <input class="search-input" id="query" name="name" type="text"
+                                placeholder="Что вы ищете ..." value="{{ data_filter.name }}" />
+                            <button class="search-button" type="submit" id="search"><img
+                                    src="{% static 'assets/img/icons/search.svg' %}" alt="поиск" />Поиск
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <body>
+        {% block content %}
+        {% endblock %}
+    </body>
+
+    <footer class="Footer">
+        <div class="wrap">
+            <div class="row Footer-main">
+                <div class="row-block"><a class="logo Footer-logo" href="#"><img class="logo-image"
+                            src="{% static 'assets/img/logo_footer.png' %}" alt="logo_footer.png" /></a>
+                    <p>Это дипломный проект Skillbox. Здесь я пытался применить и продемонстрировать навыки полученный
+                        на курсе Django-фреймворк разработки. Жду рекомендации и замечания
+                    </p>
+                    <ul class="menu menu_img menu_smallImg Footer-menuSoc">
+                        <li class="menu-item"><a class="menu-link" href="#"><img
+                                    src="{% static 'assets/img/icons/socialFooter/fb.svg' %}" alt="fb" /></a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="#"><img
+                                    src="{% static 'assets/img/icons/socialFooter/tw.svg' %}" alt="tw" /></a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="#"><img
+                                    src="{% static 'assets/img/icons/socialFooter/in.svg' %}" alt="in" /></a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="#"><img
+                                    src="{% static 'assets/img/icons/socialFooter/pt.svg' %}" alt="pt" /></a>
+                        </li>
+                        <li class="menu-item"><a class="menu-link" href="#"><img
+                                    src="{% static 'assets/img/icons/socialFooter/mail.svg' %}" alt="mail" /></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row-block">
+                    <strong class="Footer-title">Полезные ссылки</strong>
+                    <ul class="menu menu_vt Footer-menu">
+                        {% if request.user.is_authenticated %}
+                            <li class="menu-item"><a class="menu-link" href="{% url 'account:profile' request.user.id %}">Мой кабинет</a></li>
+                        {% else %}
+                            <li class="menu-item"><a class="menu-link" href="{% url 'account:sign_up' %}?next={{ request.path }}">Войти или зарегистрироваться</a></li>
+                        {% endif %}
+                        <li class="menu-item"><a class="menu-link" href="{% url 'cart:cart_detail' %}">Моя корзина</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li class="menu-item"><a class="menu-link" href="{% url 'order:history' request.user.id %}">История заказов</a></li>
+                        {% else %}
+                            <li class="menu-item"><a class="menu-link" href="https://docs.djangoproject.com/en/4.1/">Документация Django</a></li>
+                        {% endif %}
+                        <li class="menu-item"><a class="menu-link" href="https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD">Что такое магазин?</a></li>
+                        <li class="menu-item"><a class="menu-link" href="https://lifehacker.ru/pravila-zhizni-stiva-dzhobsa/?ysclid=ldjz9151ep522443431">Правила жизни Стива Джобса</a></li>
+                        <li class="menu-item"><a class="menu-link" href="https://habr.com/ru/post/481822/">Это может быть интересно</a></li>
+                    </ul>
+                </div>
+                <div class="row-block">
+                    <strong class="Footer-title">Избранные категории
+                    </strong>
+                    <ul class="menu menu_vt Footer-menu">
+                        {% for category in categories %}
+                        {% if category.chosen %}
+                        <li class="menu-item"><a class="menu-link"
+                                href="{{category.get_absolute_url}}">{{ category.name }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="row-block">
+                    <strong class="Footer-title">Контакты
+                    </strong>
+                    <p>Телефон: 8.800.200.600<br>Email: techno@info.com<br>Skype: techno<br>Адрес: Москва<br>Улица 1905
+                        года<br>123022
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="Footer-copy">
+            <div class="wrap">
+                <div class="row row_space">
+                    <div class="row-block">© Copyright&#32;<a href="/">Megano Store.</a>&#32;Все права защищены.
+                    </div>
+                    <div class="row-block"><span>Доступные платежи</span>
+                        <div class="Footer-payments">
+                            <div><img src="{% static 'assets/img/payments/visa.png' %}" alt="visa" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/mastercard.png' %}" alt="mastercard" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/paypal.png' %}" alt="paypal" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/american.png' %}" alt="american" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/electron.png' %}" alt="electron" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/maestro.png' %}" alt="maestro" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/delta.png' %}" alt="delta" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/e.png' %}" alt="e" />
+                            </div>
+                            <div><img src="{% static 'assets/img/payments/dk.png' %}" alt="dk" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--+Middle-->
+    <!--    +div.-top-->
+    <!--        +breadcrumbs('Главная','Портфолио')-->
+    <!--    +Article('portfolio')-->
+    <!---->
+
+    <script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>
+    <script src="{% static 'assets/plg/form/jquery.form.js' %}"></script>
+    <script src="{% static 'assets/plg/form/jquery.maskedinput.min.js' %}"></script>
+    <script src="{% static 'assets/plg/range/ion.rangeSlider.min.js' %}"></script>
+    <script src="{% static 'assets/plg/Slider/slick.min.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+
+</body>
+
+</html>

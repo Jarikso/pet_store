@@ -1,0 +1,28 @@
+{% extends '../base_templates/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="Section Section_column Section_columnWide">
+        <div class="wrap">
+            <div class="Section-content">
+                <header class="Section-header Section-header_sm">
+                    <h2 class="Section-title">Регистрация</h2>
+                </header>
+                {% if messages %}
+                    <dialog class="dialog" style="background-color: #e8eaef" open>
+                        {% for message in messages %}
+                            {{ message|safe }}
+                        {% endfor %}
+                        <form method="get">
+                            <button class="btn btn_success">OK</button>
+                        </form>
+                    </dialog>
+                {% endif %}
+                {% include '../base_templates/signup_view.html' %}
+                <div class="Order-footer" style="width: 88%">
+                    <a class="btn btn_success" href="#" onclick="window['closeMe'].showModal();" aria-controls="closeMe">Я уже зарегистрирован</a>
+                    {% include '../base_templates/login_view.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

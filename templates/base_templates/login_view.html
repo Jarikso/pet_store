@@ -1,0 +1,37 @@
+<style>
+    .dialog {
+        width: calc(90% - 40px);
+        max-width: 500px;
+        border: none;
+        inset: 0;
+        position: fixed;
+    }
+
+    .dialog::backdrop {
+        background-color: rgb(0 0 0 / 0.6);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+</style>
+
+<dialog class="dialog" id="closeMe">
+    <div style="width: 100%">
+        <header class="Section-header Section-header_sm">
+            <h2 class="Section-title">Войти в аккаунт</h2>
+        </header>
+        <form class="form" action="{% url 'account:login' %}?next={{ request.path }}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ login.email }}
+            </div>
+            <div class="form-group">
+                {{ login.password }}
+            </div>
+            <div class="form-group">
+                <button class="btn btn_primary btn_lg" type="submit">Вход</button>
+                <button class="btn btn_primary btn_lg" type="button"
+                    onclick="window['closeMe'].close();">Закрыть</button>
+            </div>
+        </form>
+    </div>
+</dialog>

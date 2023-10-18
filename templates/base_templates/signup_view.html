@@ -1,0 +1,42 @@
+<form class="form" style="width: 75%; margin: 0 auto" method="post">
+    <div class="row">
+        <div class="row-block">
+            <div class="form-group">
+                {% if signup.full_name.errors %}<label class="form-label" style="color: red">{{ signup.full_name.errors }}</label>
+                {% else %}<label class="form-label" for="id_full_name">ФИО</label>
+                {% endif %}
+                {{ signup.full_name }}
+            </div>
+            <div class="form-group">
+                {% if signup.phone.errors %}<label class="form-label" style="color: red">{{ signup.phone.errors }}</label>
+                {% else %}<label class="form-label" for="id_phone">Телефон</label>
+                {% endif %}
+                {{ signup.phone }}
+            </div>
+            <div class="form-group">
+                {% if signup.email.errors %}<label class="form-label" style="color: red">{{ signup.email.errors }}</label>
+                {% else %}<label class="form-label" for="id_email">Email</label>
+                {% endif %}
+                {{ signup.email }}
+            </div>
+        </div>
+        <div class="row-block">
+            <div class="form-group">
+                {% if signup.password2.errors %}<label class="form-label" style="color: red">{{ signup.password2.errors }}</label>
+                {% else %}<label class="form-label" for="id_password1">Пароль</label>
+                {% endif %}
+                {{ signup.password1 }}
+            </div>
+            <div class="form-group">
+                {% if signup.password2.errors %}<label class="form-label" style="color: red">{{ signup.password2.errors }}</label>
+                {% else %}<label class="form-label" for="id_password2">Подтверждение пароля </label>
+                {% endif %}
+                {{ signup.password2 }}
+            </div>
+            <div class="form-group">
+                <button class="btn btn_muted Order-btnReg">Зарегистрироваться</button>
+            </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>

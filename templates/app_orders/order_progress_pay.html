@@ -1,0 +1,80 @@
+{% extends '../base_templates/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .dialog {
+
+        position: absolute;
+        top: 323px;
+        width: 35%;
+        height: 30%;
+        display: none;
+        background-color: white;
+        border: none;
+        z-index: 10;
+    }
+
+    .container {
+        padding: 15px;
+        width: 450px;
+        background-color: #f5f5f5;
+        margin: 0 auto;
+        margin-top: 70px;
+    }
+
+    .pay-message {
+        font-size: 20px;
+    }
+</style>
+{# БЛОК выводит сообщение о статусе оплаты через определенное время#}
+{% if messages %}
+<dialog id="dialog" class="dialog" open>
+    <div class="container">
+        {% for message in messages %}
+        <p class="pay-message">{{ message|safe }}</p>
+        {% endfor %}
+        <form method="get" action="{% url 'catalog:main_page' %}">
+            <button class="btn btn_success">На главную</button>
+        </form>
+    </div>
+</dialog>
+<script>
+    let headingElement = document.getElementById('dialog');
+    setTimeout(showmessage, 1000);
+    function showmessage() { headingElement.style.display = 'block' }
+</script>
+{% endif %}
+{# Конец блока#}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Ожидание оплаты
+                </h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="index.html">home</a>
+                    </li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Ожидание оплаты</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section">
+        <div class="wrap">
+            <div class="ProgressPayment">
+                <div class="ProgressPayment-title">Ждем подтверждения оплаты платежной системой
+                </div>
+                <div class="ProgressPayment-icon">
+                    <div class="cssload-thecube">
+                        <div class="cssload-cube cssload-c1"></div>
+                        <div class="cssload-cube cssload-c2"></div>
+                        <div class="cssload-cube cssload-c4"></div>
+                        <div class="cssload-cube cssload-c3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

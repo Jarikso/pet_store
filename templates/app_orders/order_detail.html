@@ -1,0 +1,163 @@
+{% extends '../base_templates/base.html' %}
+
+{% block content %}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Заказ №200
+                </h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="/">главная</a>
+                    </li>
+                    <li class="breadcrumbs-item"><a href="{% url 'order:history' request.user.id %}">История заказов</a>
+                    </li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Заказ №{{ order.number_order }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section">
+        <div class="wrap">
+            <div class="Section-content">
+                <div class="Orders">
+                </div>
+                <div class="Order">
+                    <div class="Order-infoBlock">
+                        <div class="Order-personal">
+                            <div class="row">
+                                <div class="row-block">
+                                    <div class="Order-info Order-info_date">
+                                        <div class="Order-infoType">Дата заказа:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.created }}
+                                        </div>
+                                    </div>
+                                    <div class="Order-info">
+                                        <div class="Order-infoType">ФИО:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.full_name }}
+                                        </div>
+                                    </div>
+                                    <div class="Order-info">
+                                        <div class="Order-infoType">Телефон:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.phone }}
+                                        </div>
+                                    </div>
+                                    <div class="Order-info">
+                                        <div class="Order-infoType">E-mail:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.email }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-block">
+                                    <div class="Order-info Order-info_delivery">
+                                        <div class="Order-infoType">Тип доставки:
+                                        </div>
+                                        {% if order.delivery == 'EX' %}
+                                        <div class="Order-infoContent">Экспресс доставка</div>
+                                        {% else %}
+                                        <div class="Order-infoContent">Обычная доставка</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="Order-info">
+                                        <div class="Order-infoType">Город:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.city }}
+                                        </div>
+                                    </div>
+                                    <div class="Order-info">
+                                        <div class="Order-infoType">Адрес:
+                                        </div>
+                                        <div class="Order-infoContent">{{ order.address }}
+                                        </div>
+                                    </div>
+                                    <div class="Order-info Order-info_pay">
+                                        <div class="Order-infoType">Оплата:
+                                        </div>
+                                        {% if order.pay_method == 'MC' %}
+                                        <div class="Order-infoContent">Онлайн картой</div>
+                                        {% else %}
+                                        <div class="Order-infoContent">Онлайн со случайного чужого счета</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="Order-info Order-info_status">
+                                        <div class="Order-infoType">Статус:
+                                        </div>
+                                        {% if order.paid == True %}
+                                        <div class="Order-infoContent">Оплачен</div>
+                                        {% else %}
+                                        <div class="Order-infoContent">Не оплачен</div>
+                                        {% endif %}
+                                    </div>
+                                    {% if order.paid == False %}
+                                    <div class="Order-info Order-info_error">
+                                        <div class="Order-infoType">Оплата не прошла:
+                                        </div>
+                                        <div class="Order-infoContent">Оплата не выполнена, т.к. вы подозреваетесь в
+                                            нетолерантности
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Cart Cart_order">
+                            {% for product in products %}
+                            <div class="Cart-product">
+                                <div class="Cart-block Cart-block_row">
+                                    <div class="Cart-block Cart-block_pict"><a class="Cart-pict"
+                                            href="{% url 'catalog:goods' product.product.slug %}"><img class="Cart-img"
+                                                src={{ product.product.image.first.image.url }} alt="card.jpg" /></a>
+                                    </div>
+                                    <div class="Cart-block Cart-block_info"><a class="Cart-title"
+                                            href="{% url 'catalog:goods' product.product.slug %}">{{ product.product.name }}</a>
+                                        <div class="Cart-desc"
+                                            style="width:500px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical">
+                                            {{ product.product.description }}
+                                        </div>
+                                    </div>
+                                    <div class="Cart-block Cart-block_price">
+                                        <div class="Cart-price">{{ product.product.price }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Cart-block Cart-block_row">
+                                    <div class="Cart-block Cart-block_amount">{{ product.quantity }} шт.
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="Cart-total">
+                                <div class="Cart-block Cart-block_total">
+                                    <strong class="Cart-title">Итого:
+                                        <span class="Cart-price">{{ order.price }}</span>
+                                        {% if order.delivery == 'EX' %}<span style="font-size: 12px;">(Из них 500руб. -
+                                            доставка)</span>{% endif %}
+                                    </strong>
+                                </div>
+                                {% if order.paid == False %}
+                                <form class="Cart-block" style="display: flex"
+                                    action="{% url 'order:only_order' order.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div style="display: flex; flex-direction: column">
+                                        <div><input type="radio" id="MC" name="order" value='MC' required><label
+                                                for="MC">Онлайн картой</label></div>
+                                        <div><input type="radio" id="AC" name="order" value='AC' required><label
+                                                for="AC">Онлайн с чужого счета</label></div>
+                                    </div>
+                                    <div><button class="btn btn_primary btn_lg">Оплатить</button></div>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

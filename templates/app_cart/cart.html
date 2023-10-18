@@ -1,0 +1,109 @@
+{% extends '../base_templates/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .btn_none:hover {
+        border-bottom: none;
+    }
+
+    .button_remove,
+    .button_add {
+        min-width: 56px;
+        height: 56px;
+        background: none;
+        display: block;
+        position: relative;
+        margin-right: 10px;
+        padding: 0;
+        cursor: pointer;
+        line-height: 0;
+        border: 1px solid transparent;
+        background-color: #ebebeb;
+        transition: all 300ms;
+    }
+
+    .button_add {
+        margin-left: 10px;
+        margin-right: 0;
+    }
+</style>
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Корзина
+                </h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="/">главная</a>
+                    </li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Корзина</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section">
+        <div class="wrap">
+            <div class="form Cart">
+
+                {% for item in cart %}
+                {% with product=item.product %}
+
+                <div class="Cart-product">
+                    <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict"
+                                href="{% url 'catalog:goods' item.db_product.slug %}">
+                            <img class="Cart-img" src={{ item.db_product.image.first.image.url }} alt="card.jpg" /></a>
+                        </div>
+                        <div class="Cart-block Cart-block_info"><a class="Cart-title"
+                                href="{% url 'catalog:goods' item.db_product.slug %}">{{ item.product }}</a>
+                            <div class="Cart-desc"
+                                style="width:500px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical">
+                                {{item.db_product.description}}}
+                            </div>
+                        </div>
+                        <div class="Cart-block Cart-block_price">
+                            <div class="Cart-price">{{ item.price }}&#8381;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Cart-block Cart-block_row">
+                        <div class="Cart-block Cart-block_seller">
+                            <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+
+                        </div>
+                        <div class="Cart-block Cart-block_amount">
+                            <div class="Cart-amount">
+                                <div class="Amount">
+                                    <a class="btn_none" href="{% url 'cart:item_decrement' item.id %}"><input
+                                            class="button_remove" type="submit" value="-"></a>
+                                    <input class="Amount-input form-input" type="text" value="{{ item.quantity }}">
+                                    <a class="btn_none" href="{% url 'cart:item_increment' item.id %}"><input
+                                            class="button_add" type="submit" value="+"></a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Cart-block Cart-block_delete"><a class="Cart-delete"
+                                href="{% url 'cart:cart_remove' item.id %}"><img
+                                    src="{% static 'assets/img/icons/card/delete.svg'%} " alt="delete.svg" /></a>
+                        </div>
+                    </div>
+                </div>
+                {% endwith %}
+                {% endfor %}
+
+                <div class="Cart-total">
+                    <div class="Cart-block Cart-block_total">
+                        <strong class="Cart-title">Итого:
+                        </strong><span class="Cart-price">{{ cart.get_total_price }} &#8381;</span>
+                    </div>
+                    <div class="Cart-block"><a class="btn btn_success btn_lg"
+                            href="{% url 'order:make_order' %}?next={{ request.path }}">Оформить заказ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
