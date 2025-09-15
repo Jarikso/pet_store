@@ -1,4 +1,4 @@
-# Django-diploma - Placemarket
+# Django - Placemarket
 ## Содержание
 - Описание приложения <br/>
 - Запуск приложения <br/>
